@@ -26,9 +26,8 @@ class NewsController extends Controller
         }
 
         $news = $query->paginate();
-        $sections = Section::all();
 
-        return view('news.index', compact('news', 'sections'));
+        return view('news.index', compact('news'));
     }
 
     public function show(Request $request, string $slug): View
