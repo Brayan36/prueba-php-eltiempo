@@ -25,17 +25,17 @@ class Status extends Model
     // Consultas creadas para simplificar el llamado en controlador
     public static function draft(): self
     {
-        return self::where('slug', 'draft')->firstOrFail();
+        return self::where('slug', 'borrador')->firstOrFail();
     }
 
     public static function published(): self
     {
-        return self::where('slug', 'published')->firstOrFail();
+        return self::where('slug', 'publicado')->firstOrFail();
     }
 
     public static function archived(): self
     {
-        return self::where('slug', 'archived')->firstOrFail();
+        return self::where('slug', 'archivado')->firstOrFail();
     }
 
     public function news(): HasMany

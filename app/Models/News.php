@@ -42,7 +42,7 @@ class News extends Model
             }
 
             // Si el status es "published" y no tiene published_at, lo asignamos
-            if ($news->status && $news->status->slug === 'published' && empty($news->published_at)) {
+            if ($news->status && $news->status->slug === 'publicado' && empty($news->published_at)) {
                 $news->published_at = now();
             }
         });
@@ -51,7 +51,7 @@ class News extends Model
             // Si cambia a publicado y aún no tiene fecha, la registramos
             if ($news->isDirty('status_id')) {
                 $status = Status::find($news->status_id);
-                if ($status && $status->slug === 'published' && empty($news->published_at)) {
+                if ($status && $status->slug === 'publicado' && empty($news->published_at)) {
                     $news->published_at = now();
                 }
             }
@@ -75,7 +75,7 @@ class News extends Model
 
     public function scopePublished(Builder $query): Builder
     {
-        return $query->whereHas('status', fn ($q) => $q->where('slug', 'published'));
+        return $query->whereHas('status', fn ($q) => $q->where('slug', 'publicado'));
     }
 
     public function scopeBySection(Builder $query, int|string $section): Builder
