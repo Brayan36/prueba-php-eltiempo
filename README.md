@@ -1,59 +1,220 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# prueba-php-eltiempo — Prueba Técnica PHP El Tiempo
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Portal de noticias en PHP desarrollado con **Laravel 12**, **PHP** y **CSS propio**, inspirado en el diseño de [motor.com.co](https://www.motor.com.co).
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requisitos
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- PHP >= 8.2
+- Composer
+- MySQL >= 8.0
+- Node.js >= 18
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Instalación y puesta en marcha
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 1. Clonar el repositorio
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```bash
+git clone git@github.com:Brayan36/prueba-php-eltiempo.git ó https://github.com/Brayan36/prueba-php-eltiempo.git
+cd prueba-php-eltiempo
+```
 
-## Laravel Sponsors
+### 2. Instalar dependencias
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+npm install && npm run build
+```
 
-### Premium Partners
+### 3. Configurar el entorno
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+Editar `.env` con los datos de la base de datos:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=prueba-php-eltiempo
+DB_USERNAME=root
+DB_PASSWORD={contraseña utilicen}
+```
 
-## Code of Conduct
+También puede usarse SQLite modificando 
+```env
+DB_CONNECTION=sqlite
+#DB_HOST=127.0.0.1
+#DB_PORT=3306
+#DB_DATABASE=prueba-php-eltiempo
+#DB_USERNAME=root
+#DB_PASSWORD={contraseña utilicen}
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+### 4. Crear la base de datos
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Crear manualmente la base de datos en MySQL:
 
-## License
+```sql
+CREATE DATABASE prueba-php-eltiempo CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Nota: las últimas versiones de Laravel, al correr el comando artisan migrate crea automáticamente la DB en MySQL.
+
+### 5. Ejecutar migraciones y seeder
+
+```bash
+php artisan migrate --seed
+```
+
+El seeder crea automáticamente:
+- Las 6 secciones: "Deportes, Política, Social, Internacional, Cultura, Salud"
+- Los 3 estados: "Borrador, Publicado, Archivado": solo los que tengan estado publicado, se verán en el listado público
+- Un usuario de prueba:
+
+| Campo | Valor |
+|-------|-------|
+| Email | test@example.com |
+| Password | 12345678 |
+
+### 6. Enlace de almacenamiento
+
+```bash
+php artisan storage:link
+```
+
+### 7. Levantar el servidor
+
+```bash
+php artisan serve
+```
+
+El portal estará disponible en `http://127.0.0.1:8000`.
+
+---
+
+## Credenciales de prueba
+
+```
+Email:    test@example.com
+Password: 12345678
+```
+
+---
+
+## Estructura de archivos modificados / creados
+
+```
+news-portal/
+│
+├── app/
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   └── NewsController.php          <- CRUD completo + vistas públicas
+│   │   └── Requests/
+│   │       ├── StoreNewsRequest.php         <- Validación al crear noticia
+│   │       └── UpdateNewsRequest.php        <- Validación al editar + ownership
+│   └── Models/
+│       ├── News.php                         <- Modelo principal, scopes, accessor imagen
+│       ├── Section.php                      <- Catálogo de secciones
+│       └── Status.php                       <- Catálogo de estados
+│
+├── database/
+│   ├── migrations/
+│   │   ├── xxxx_create_users_table.php              <- Laravel Breeze (sin modificar)
+│   │   ├── 2025_01_01_000001_create_sections_table.php
+│   │   ├── 2025_01_01_000002_create_statuses_table.php
+│   │   └── 2025_01_01_000003_create_news_table.php
+│   └── seeders/
+│       └── DatabaseSeeder.php               <- Secciones, estados y usuario de prueba
+│
+├── routes/
+│   ├── web.php                              <- Rutas públicas + dashboard autenticado
+│   └── auth.php                             <- Laravel Breeze (sin modificar)
+│
+├── public/
+│   └── css/
+│       └── app.css                          <- Estilos globales del portal
+│
+└── resources/
+    └── views/
+        ├── el-tiempo/
+        │   └── app.blade.php                <- Layout base (header, nav, footer)
+        └── news/
+            ├── index.blade.php              <- Listado público
+            ├── show.blade.php               <- Detalle de noticia + relacionadas
+            ├── my-news.blade.php            <- Dashboard del autor
+            ├── create.blade.php             <- Formulario crear noticia
+            ├── edit.blade.php               <- Formulario editar noticia
+            └── _form.blade.php              <- Partial compartido (campos del form)
+```
+
+---
+
+## Rutas disponibles
+
+### Públicas
+
+| Método | URL | Descripción |
+|--------|-----|-------------|
+| GET | `/` | Home — listado de noticias publicadas |
+| GET | `/news` | Listado con filtro por sección |
+| GET | `/news/{slug}` | Detalle de una noticia |
+
+### Autenticadas (`auth + verified`)
+
+| Método | URL | Descripción |
+|--------|-----|-------------|
+| GET | `/dashboard/my-news` | Listado de noticias del autor |
+| GET | `/dashboard/news/create` | Formulario crear noticia |
+| POST | `/dashboard/news` | Almacenar noticia |
+| GET | `/dashboard/news/{id}/edit` | Formulario editar noticia |
+| PUT | `/dashboard/news/{id}` | Actualizar noticia |
+| DELETE | `/dashboard/news/{id}` | Eliminar noticia |
+
+---
+
+## Diagrama de base de datos
+
+```
+users
+├── id
+├── name
+├── email
+├── password
+└── timestamps
+
+sections                    statuses
+├── id                      ├── id
+├── name                    ├── name
+├── slug                    ├── slug
+└── timestamps              └── timestamps
+
+news
+├── id
+├── section_id  ->  sections.id
+├── user_id     ->  users.id
+├── status_id   ->  statuses.id
+├── title
+├── slug
+├── content
+├── image          (path en storage/app/public/news/)
+├── published_at
+└── timestamps
+```
+
+---
+
+## Notas
+
+- Las imágenes se almacenan en `storage/app/public/news/` y son accesibles via `storage:link`.
+- Los usuarios no autenticados solo ven noticias con estado **Publicado**.
+- Los usuarios autenticados pueden ver noticias en cualquier estado (Borrador, Publicado, Archivado).
+- Solo el autor de una noticia puede editarla o eliminarla.
